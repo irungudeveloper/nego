@@ -27,6 +27,8 @@
         </div>
     </div>
     
+
+
     <div class="row">
         <div class="col-12 col-sm-12 col-lg-12 col-xs-12">
            <div class="card">
@@ -40,7 +42,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($category as $data)
+
+
+
+                    @forelse($category as $data)
                     <tr>
                       <th scope="row">{{$data->id}}</th>
                       <td>{{$data->category_name}}</td>
@@ -50,7 +55,39 @@
                         <a class="btn btn-solid btn-light text-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-lg fa-fw fa-trash"></i></a>
                       </td>
                     </tr>
-                   @endforeach
+                  @empty
+                    <tr>
+                      <td colspan="100%" class="text-center">No Category Data Found <a href="category/create" class="btn btn-solid btn-primary ">Add Category</a></td>
+                    </tr>
+                   @endforelse
+
+                    @if(count($category) > 0)
+                   
+                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Are You Sure
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <form method="POST" action="{{route('category.destroy',$data->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" name="delete" class="btn btn-danger" value="YES" >
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+                   
                   </tbody>
             </table>
                </div>
@@ -62,30 +99,6 @@
   
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are You Sure
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <form method="POST" action="{{route('category.destroy',$data->id)}}">
-            @csrf
-            @method('DELETE')
-            <input type="submit" name="delete" class="btn btn-danger" value="YES" >
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 @stop
 
 @section('js')

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -54,7 +57,7 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id'=>['required'],
+            
         ]);
     }
 
@@ -71,7 +74,24 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id'=>$data['role_id'],
+            'role_id'=>1,
         ]);
     }
+
+    protected function register(Request $request)
+    {
+        $data = $request->all();
+        $check = $this->create($data);
+
+        if (Auth::check()) 
+        {
+            return response()->json('Logged In');
+        }
+        else
+        {
+            return response()->json('Not Logged In');
+        }
+
+    }
+
 }

@@ -14,4 +14,6 @@ class Billing extends Model
     protected $fillable = [
         'user_id','email','phone_number','address'
     ];
+
+    public $timestamps = false;
 }

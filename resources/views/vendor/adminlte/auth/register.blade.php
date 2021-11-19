@@ -1,5 +1,9 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
 
+@section('adminlte_css_pre')
+    <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+@stop
+
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
 @php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
 
@@ -14,21 +18,36 @@
 @section('auth_header', __('adminlte::adminlte.register_message'))
 
 @section('auth_body')
-    <form action="{{ $register_url }}" method="post">
+    <form action="{{route('register')}}" method="post">
         {{ csrf_field() }}
 
         {{-- Name field --}}
         <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            <input type="text" name="first_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                   value="{{ old('first_name') }}" placeholder="First Name" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
-            @if($errors->has('name'))
+            @if($errors->has('first_name'))
                 <div class="invalid-feedback">
-                    <strong>{{ $errors->first('name') }}</strong>
+                    <strong>{{ $errors->first('first_name') }}</strong>
+                </div>
+            @endif
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" name="last_name" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}"
+                   value="{{ old('last_name') }}" placeholder="Last Name" autofocus>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('last_name'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('last_name') }}</strong>
                 </div>
             @endif
         </div>
@@ -65,6 +84,8 @@
                 </div>
             @endif
         </div>
+
+        <input type="hidden" name="role_id" value="1">
 
         {{-- Confirm password field --}}
         <div class="input-group mb-3">

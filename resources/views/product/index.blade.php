@@ -38,7 +38,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($product as $data)
+                    @forelse($product as $data)
                     <tr>
                       <th scope="row">{{$data->id}}</th>
                       <td>{{$data->product_name}}</td>
@@ -66,7 +66,11 @@
                         <a class="btn btn-solid btn-light text-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-lg fa-fw fa-trash"></i></a>
                       </td>
                     </tr>
-                   @endforeach
+                    @empty
+                    <tr>
+                      <td colspan="100%" class="text-center">No Product Data Found <a href="product/create" class="btn btn-solid btn-primary ">Add Product</a></td>
+                    </tr>
+                   @endforelse
                   </tbody>
             </table>
                </div>
@@ -76,7 +80,7 @@
     </div>
 
   
-
+@if(count($product) > 0)
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -92,7 +96,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <form method="POST" action="{{route('brand.destroy',$data->id)}}">
+        <form method="POST" action="{{route('product.destroy',$data->id)}}">
             @csrf
             @method('DELETE')
             <input type="submit" name="delete" class="btn btn-danger" value="YES" >
@@ -101,6 +105,7 @@
     </div>
   </div>
 </div>
+@endif
 
 @stop
 

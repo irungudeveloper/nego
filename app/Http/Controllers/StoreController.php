@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class StoreController extends Controller
 {
@@ -14,6 +16,20 @@ class StoreController extends Controller
     public function index()
     {
         //
+        $products = Product::with('category')->get();
+        $category = Category::with('product')->get();
+
+        return view('frontend.landing')->with('products',$products)
+                                        ->with('category',$category);
+
+    }
+
+    public function single($id)
+    {
+        // code...
+        $product = Product::findOrFail($id);
+
+        return view('frontend.single')->with('product',$product);
     }
 
     /**

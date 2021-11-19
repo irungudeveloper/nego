@@ -40,7 +40,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($brand as $data)
+                    @forelse($brand as $data)
                     <tr>
                       <th scope="row">{{$data->id}}</th>
                       <td>{{$data->brand_name}}</td>
@@ -50,7 +50,13 @@
                         <a class="btn btn-solid btn-light text-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-lg fa-fw fa-trash"></i></a>
                       </td>
                     </tr>
-                   @endforeach
+
+                    @empty
+                     <tr>
+                      <td colspan="100%" class="text-center">No Brand Data Found <a href="brand/create" class="btn btn-solid btn-primary ">Add Brand</a></td>
+                    </tr>
+
+                   @endforelse
                   </tbody>
             </table>
                </div>
@@ -60,6 +66,7 @@
     </div>
 
   
+@if(count($brand) > 0)
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,6 +92,7 @@
     </div>
   </div>
 </div>
+@endif
 
 @stop
 
