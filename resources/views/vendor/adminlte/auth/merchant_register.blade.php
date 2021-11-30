@@ -18,9 +18,9 @@
 @section('auth_header', __('adminlte::adminlte.register_message'))
 
 @section('auth_body')
-create merchant
 
- <p>Create merchant</p>
+
+ 
     <form action="{{route('register')}}" method="post">
         {{ csrf_field() }}
 

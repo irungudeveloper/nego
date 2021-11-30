@@ -20,4 +20,10 @@ class Delivery extends Model
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
+
+    public function billing()
+    {
+        // code...
+        return $this->belongsTo(Billing::class,'delivery_id','id');
+    }
 }

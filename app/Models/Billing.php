@@ -15,5 +15,11 @@ class Billing extends Model
         'user_id','email','phone_number','address'
     ];
 
+    public function delivery()
+    {
+        // code...
+        return $this->hasOne(Delivery::class,'id','delivery_id');
+    }
+
     public $timestamps = false;
 }

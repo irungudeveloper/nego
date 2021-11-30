@@ -348,6 +348,13 @@ return [
             ],
         ],
 
+        [
+            'text'=>'Manage Orders',
+            'url'=>'order',
+            'can'=>'merchant',
+        ],
+
+
         // [
         //     'text'    => 'Account Settings',
         //     // 'icon'    => 'fas fa-fw fa-share',
@@ -370,6 +377,12 @@ return [
         [
             'text'=>'Billing Information',
             'url'=>'bill',
+            'can'=>'customer',
+        ],
+
+        [
+            'text'=>'Manage Orders',
+            'url'=>'customer/order',
             'can'=>'customer',
         ],
 

@@ -61,4 +61,10 @@ class User extends Authenticatable
         // code...
         return $this->hasMany(Delivery::class,'user_id','id');
     }
+
+    public function billing()
+    {
+        // code...
+        return $this->hasOne(Billing::class,'user_id','id');
+    }
 }

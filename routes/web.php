@@ -9,7 +9,10 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\MpesaController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -59,11 +62,20 @@ Route::middleware(['auth'])->group(function ()
     Route::post('customer/store',[CustomerController::class,'store'])->name('customer.store');
     Route::resource('delivery',DeliveryController::class);
     Route::resource('bill',BillController::class);
+    Route::resource('checkout',CheckoutController::class);
+    Route::resource('pay/mpesa',MpesaController::class);
+    Route::resource('order',OrderController::class);
+
+    Route::get('customer/order',[OrderController::class,'customer'])->name('customer.order');
+
+    Route::post('/mpesa/confirm',[MpesaController::class,'transactionConfirmation'])->name('mpesa.confirm');
 });
 
 Route::get('register',[CustomAuthController::class,'registration'])->name('register');
 Route::get('merchant/create',[CustomAuthController::class,'merchant'])->name('merchant.create');
 Route::get('customer/create',[CustomAuthController::class,'customer'])->name('customer.create');
+
+Route::get('/mpesa',[CheckoutController::class,'mpesa'])->name('mpesa');
 
 Route::post('register',[CustomAuthController::class,'customRegistration'])->name('register.create'); 
 Route::get('login',[CustomAuthController::class,'index'])->name('login');

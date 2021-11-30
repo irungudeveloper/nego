@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\Store;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
-class StoreController extends Controller
+use App\helper\mpesa_utils;
+
+use App\Models\Billing;
+use App\Models\Customer;
+use App\Models\Delivery;
+// use App\Models\User;
+use App\Models\Cart;
+
+class CheckoutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,20 +24,15 @@ class StoreController extends Controller
     public function index()
     {
         //
-        $products = Product::with('category')->get();
-        $category = Category::with('product')->get();
+        $delivery = Delivery::all();
+        $billing = Billing::where('user_id',Auth::user()->id)->with('delivery')->get();
+        $customer = Customer::where('user_id',Auth::user()->id)->get();
+        $cart = Cart::where('user_id',Auth::user()->id)->get();
 
-        return view('frontend.landing')->with('products',$products)
-                                        ->with('category',$category);
-
-    }
-
-    public function single($id)
-    {
-        // code...
-        $product = Product::findOrFail($id);
-
-        return view('frontend.single')->with('product',$product);
+        return view('frontend.checkout')->with('delivery',$delivery)
+                                        ->with('billing',$billing)
+                                        ->with('cart',$cart)
+                                        ->with('customer',$customer);
     }
 
     /**
@@ -97,5 +99,14 @@ class StoreController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function mpesa(Request $request)
+    {
+        $phone_number = 254799401110;
+        $amount = 2;
+        $stk_push = new mpesa_utils;
+
+        return response()->json([$stk_push->onlineCheckout($phone_number,$amount)]);
     }
 }

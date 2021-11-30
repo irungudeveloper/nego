@@ -39,7 +39,7 @@
                         <div class="featured__item__pic set-bg" data-setbg="{{asset('storage/images/'.$data->product_image)}}">
                             <ul class="featured__item__pic__hover">
                                 <li><a href="{{ route('product.single',$data->id) }}"><i class="fa fa-eye"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <!-- <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
                             </ul>
                         </div>
                         <div class="featured__item__text">

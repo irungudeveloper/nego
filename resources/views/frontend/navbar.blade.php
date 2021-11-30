@@ -126,7 +126,7 @@
                     <div class="header__cart">
                         <ul>
                             
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
+                            <li><a href=" {{ route('cart.index') }} "><i class="fa fa-shopping-bag"></i> <span></span></a></li>
                         </ul>
                         
                     </div>

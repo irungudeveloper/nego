@@ -65,7 +65,25 @@
                             <div class="form-check">
                               <input class="form-check-input" type="radio" name="availability_status" id="availability" value="1">
                               <label class="form-check-label" for="availability">
-                                Availability Status
+                                Available
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="negotiable" id="n_negotiable" value="0">
+                              <label class="form-check-label" for="n_negotiable">
+                                Not Negotiable 
+                              </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="availability_status" id="n_availability" value="0">
+                              <label class="form-check-label" for="n_availability">
+                                Not Available
                               </label>
                             </div>
                         </div>
