@@ -349,10 +349,30 @@ return [
         ],
 
         [
+            'text'    => 'Discount Menu',
+            // 'icon'    => 'fas fa-fw fa-share',
+            'can'=>'merchant',
+            'submenu' => [
+                [
+                    'text' => 'Generate Discount Code',
+                    'url'  => 'discount/create',
+                    'shift' => 'ml-2',
+                ],
+                [
+                    'text' => 'Manage Discount Codes',
+                    'url'  => 'discount',
+                    'shift' => 'ml-2',
+                ],
+            ],
+        ],
+
+        [
             'text'=>'Manage Orders',
             'url'=>'order',
             'can'=>'merchant',
         ],
+
+
 
 
         // [

@@ -13,6 +13,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Route::middleware(['auth'])->group(function ()
     Route::resource('checkout',CheckoutController::class);
     Route::resource('pay/mpesa',MpesaController::class);
     Route::resource('order',OrderController::class);
+    Route::resource('discount',DiscountController::class);
 
     Route::get('customer/order',[OrderController::class,'customer'])->name('customer.order');
 
