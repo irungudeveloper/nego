@@ -30,7 +30,7 @@
         <div class="col-12 col-sm-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="order_table" class="table-hover table-borderd table-striped table-responsive-sm" style="width:100%">
+                    <table id="order_table" class="table-hover table-borderd table-striped table-responsive" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -66,11 +66,18 @@
                                 <td class="p-3">
                                     @if($data->delivery_status == 0)
                                      <p class="btn btn-solid btn-info">Not Delivered</p>
+                                    @elseif($data->delivery_status == 3)
+                                     <p class="btn btn-solid btn-danger">Order Cancelled</p>
                                     @else
                                      <p class="btn btn-solid btn-success">Delivered</p>
                                     @endif
                                 </td>
-                                <td class="p-3">Actions</td>
+                                <td class="p-3">
+                                    @if($data->delivery_status == 0)
+                                     <a href="{{route('delivery.confirm',$data->id)}}" class="btn btn-solid btn-primary">Confirm Delivery</a></td>
+                                    @else
+                                    <p class="btn btn-solid btn-secondary">No Action</p>
+                                    @endif
                             </tr>
                             @empty
                                 <tr>

@@ -142,4 +142,46 @@ class OrderController extends Controller
         //
     }
 
+    public function confirmDelivery()
+    {
+        // code...
+
+
+        
+    }
+
+    public function deliveryConfirm($id)
+    {
+        // code...
+       try 
+        {
+            Order::where('id',$id)
+                    ->update(['delivery_status'=>1]);
+
+            return redirect()->route('order.index')->with('success','Order Status Updated');    
+        } 
+        catch (Exception $e) 
+        {
+            return redirect()->route('order.index')->with('error','Order Status Not Updated');
+        }
+    }
+
+    public function cancelOrder($id)
+    {
+        // code...
+        try 
+        {
+            Order::where('id',$id)
+                    ->where('delivery_status',0)
+                    ->update(['delivery_status'=>3]);
+
+            return redirect()->route('customer.order')->with('success','Order Status Updated');    
+        } 
+        catch (Exception $e) 
+        {
+            return redirect()->route('customer.order')->with('error','Order Status Not Updated');
+        }
+
+    }
+
 }

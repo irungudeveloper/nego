@@ -32,6 +32,7 @@
                                 <th>Quantity</th>
                                 <th>Amount</th>   
                                 <th>Delivery Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,10 +55,18 @@
                                 <td class="p-3">
                                     @if($data->delivery_status == 0)
                                      <p class="btn btn-solid btn-info">Not Delivered</p>
+                                    @elseif($data->delivery_status == 3)
+                                    <p class="btn btn-solid btn-danger">Order Cancelled</p>
                                     @else
                                      <p class="btn btn-solid btn-success">Delivered</p>
                                     @endif
                                 </td>
+                                <td>
+                                    @if($data->delivery_status == 0)
+                                    <a href=" {{ route('order.cancel',$data->id) }} " class="btn btn-solid btn-danger">Cancel Order</a></td>
+                                    @else
+                                    <p class="btn btn-solid btn-secondary">No Action</p>
+                                    @endif
                             </tr>
                             @empty
                                 <tr>

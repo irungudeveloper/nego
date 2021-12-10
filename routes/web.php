@@ -69,10 +69,12 @@ Route::middleware(['auth'])->group(function ()
     Route::resource('discount',DiscountController::class);
 
     Route::get('customer/order',[OrderController::class,'customer'])->name('customer.order');
-
     Route::post('/mpesa/confirm',[MpesaController::class,'transactionConfirmation'])->name('mpesa.confirm');
-
     Route::post('/cart/discount',[DiscountController::class,'applyDiscount'])->name('cart.discount');
+
+    Route::get('/order/confirm',[OrderController::class,'confirmDelivery'])->name('confirm.order');
+    Route::get('/order/{id}/confirm',[OrderController::class,'deliveryConfirm'])->name('delivery.confirm');
+    Route::get('/order/{id}/cancel',[OrderController::class,'cancelOrder'])->name('order.cancel');
 
 });
 

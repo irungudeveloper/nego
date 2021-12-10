@@ -168,7 +168,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-12 col-sm-12 col-lg-12 col-md-12 text-center">
-                                <input type="submit" name="submit" value="Pay" class="btn btn-solid btn-primary">
+                                <button id="submit" class="btn btn-solid btn-success">Pay</button>
                             </div>
 
                             <div id="initiate" class="blink col-12 col-sm-12 col-lg-12 col-xs-12 col-md-12 text-center">
@@ -182,7 +182,7 @@
                             </div>
                         </div>
                         </form>
-                        <button id="submit">Click me</button>
+                        
                     </div>
                 </div>
             </div>
@@ -210,9 +210,11 @@
                 $('#process').hide();
                 $('#confirm').hide();
 
-                document.getElementById("submit").addEventListener('click',function()
+                document.getElementById("submit").addEventListener('click',function(e)
                 {
-                    // e.preventDefault();
+                    
+                    e.preventDefault();
+
                     console.log('clicked');
                     $('#initiate').show();
 

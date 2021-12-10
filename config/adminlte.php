@@ -262,6 +262,7 @@ return [
        
       [
             'header'=>'DASHBOARD CONTROLS',
+            'shift' => 'mb-2',
             
         ],
         [
@@ -272,6 +273,7 @@ return [
         [
             'header'=>'MERCHANT CONTROLS',
             'can'=>'merchant',
+            'shift' => 'mb-2 mt-2',
         ],
 
         [
