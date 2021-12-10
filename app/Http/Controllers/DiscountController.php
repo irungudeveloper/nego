@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Discount;
 use App\Models\Product;
+use App\Models\Cart;
 
 class DiscountController extends Controller
 {
@@ -181,6 +182,77 @@ class DiscountController extends Controller
         catch (Exception $e) 
         {
             return redirect()->route('discount.index')->with('error','Error in deleting discount');
+        }
+    }
+
+    public function applyDiscount(Request $request)
+    {
+        $rules = ['code'=>'required'];
+
+        $validator = \Validator::make($request->all(),$rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->with('error','Missing/Incorrect input');
+        }
+        else
+        {
+            $discount = Discount::where('code',$request->input('code'))
+                                    ->where('active',1)
+                                    ->get();
+            if (count($discount) <= 0 ) 
+            {
+                // code...
+                return redirect()->back()->with('error','discount code invalid');
+            } 
+            else 
+            {
+                // code...
+                $product_id = 0;
+                $percentage = 0;
+
+                foreach ($discount as $data) 
+                {
+                    // code...
+                    $product_id = $data->product_id;
+                    $percentage = $data->percentage;
+                }
+
+                $percentage = (int)$percentage;
+
+                $total = Cart::where('user_id',Auth::user()->id)
+                            ->where('product_id',$product_id)
+                            ->pluck('total_cost');
+                $cost = 0;
+
+                foreach ($total as $original) 
+                {
+                    // code...
+                    $cost = $original;
+                }
+
+                $total_cost = $cost - ($cost*($percentage/100));
+
+                try 
+                {
+                    Cart::where('user_id',Auth::user()->id)
+                            ->where('product_id',$product_id)
+                            ->update(['total_cost'=>$total_cost]);
+
+                    Discount::where('code',$request->input('code'))
+                                ->update(['active'=>0]);
+
+                    return redirect()->back()->with('success','Discount applied');
+
+                } 
+                catch (Exception $e) 
+                {
+                    return redirect()->back()->with('error','Error applying discount code');    
+                }
+
+            }
+            
+
         }
     }
 }

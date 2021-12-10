@@ -71,6 +71,9 @@ Route::middleware(['auth'])->group(function ()
     Route::get('customer/order',[OrderController::class,'customer'])->name('customer.order');
 
     Route::post('/mpesa/confirm',[MpesaController::class,'transactionConfirmation'])->name('mpesa.confirm');
+
+    Route::post('/cart/discount',[DiscountController::class,'applyDiscount'])->name('cart.discount');
+
 });
 
 Route::get('register',[CustomAuthController::class,'registration'])->name('register');

@@ -6,6 +6,31 @@
 
 @section('content')
 
+@if(Session::has('error'))
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body bg-danger text-white text-center">
+                <h4>{{ Session::get('error')}}</h4>
+            </div>
+        </div>
+    </div>
+  
+</div>
+@endif
+
+@if(Session::has('success'))
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body bg-success text-white text-center">
+                <h4>{{ Session::get('success')}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 	<section class="shoping-cart spad">
         <div class="container">
             <div class="row">
@@ -42,7 +67,7 @@
 
                             	<tr data-id=" {{ $data->id }} ">
                                     <td class="shoping__cart__item">
-                                        <img src="{{asset('storage/images/'.$product->product_image)}}" alt="" height="150px" width="150px">
+                                        <img src="{{asset('storage/images/'.$product->product_image)}}" alt="" height="50px" width="50px">
                                         <h5> {{ $product->product_name }} </h5>
                                     </td>
                                     <td class="shoping__cart__price">
@@ -83,20 +108,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href=" {{ route('store.index') }} " class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href=" {{ route('store.index') }} " class="btn btn-solid btn-info">CONTINUE SHOPPING</a>
 
                         <input type="submit" name="submit" value="Update Cart" class="primary-btn cart-btn cart-btn-right">
                     </div>
                     </form>
 
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 p-2">
                     <div class="shoping__continue">
                         <div class="shoping__discount">
                             <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            <form action=" {{ route('cart.discount') }} " method="POST">
+                                @csrf
+                                <input type="text" placeholder="Enter your discount code" name="code">
+                                <input type="submit" class="btn btn-solid btn-primary text-white" value="APPLY DISCOUNT">
                             </form>
                         </div>
                     </div>
