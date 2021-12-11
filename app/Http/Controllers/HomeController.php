@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Tasks;
 
 class HomeController extends Controller
 {
@@ -36,9 +37,12 @@ class HomeController extends Controller
 
         $customer_count = User::where('role_id',2)->count(); 
 
+        $tasks = Tasks::where('user_id',Auth::user()->id)->get();
+
         return view('home')->with('average_purchase_price',$average_purchase_price)
                             ->with('average_income',$average_income)
-                            ->with('customer_count',$customer_count);
+                            ->with('customer_count',$customer_count)
+                            ->with('tasks',$tasks);
 
     }
 

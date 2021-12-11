@@ -15,6 +15,7 @@ use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ Route::middleware(['auth'])->group(function ()
     Route::resource('pay/mpesa',MpesaController::class);
     Route::resource('order',OrderController::class);
     Route::resource('discount',DiscountController::class);
+    Route::resource('merchant/tasks',TasksController::class);
 
     Route::get('customer/order',[OrderController::class,'customer'])->name('customer.order');
     Route::post('/mpesa/confirm',[MpesaController::class,'transactionConfirmation'])->name('mpesa.confirm');

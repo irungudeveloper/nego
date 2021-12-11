@@ -19,4 +19,10 @@ class Tasks extends Model
                             'status',
                         ];
 
+    public function user()
+    {
+        // code...
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
 }
