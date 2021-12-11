@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Tasks;
+use App\Models\Cart;
 
 class HomeController extends Controller
 {
@@ -50,6 +51,13 @@ class HomeController extends Controller
     {
         // code...
 
-        return response()->json(['Message'=>'Client Dashboard']);
+        $cart_items = Cart::where('user_id',Auth::user()->id)->count();
+        $orders = Order::where('user_id',Auth::user()->id)->count();
+        $spent = (int)Order::where('user_id',Auth::user()->id)
+                        ->avg('amount');
+
+        return view('clientdashboard')->with('cart_item',$cart_items)
+                                        ->with('order_items',$orders)
+                                        ->with('order_amount',$spent);
     }
 }

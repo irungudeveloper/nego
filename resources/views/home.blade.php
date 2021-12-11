@@ -155,18 +155,6 @@
 
     </div>
 
-
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <p class="mb-0">More Stuff Coming Soon</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <!-- Task creation modal -->
 <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="addTask" aria-hidden="true">
   <div class="modal-dialog" role="document">
