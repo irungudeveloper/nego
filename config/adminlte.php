@@ -268,6 +268,7 @@ return [
         [
             'text'=>'Dashboard',
             'url'=>'dashboard',
+            'icon'=>'fas fa-tachometer-alt'
         ],
 
         [
@@ -278,7 +279,7 @@ return [
 
         [
             'text'    => 'Category Menu',
-            // 'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-list-alt',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -298,7 +299,7 @@ return [
 
         [
             'text'    => 'Brand Menu',
-            // 'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-list-alt',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -316,7 +317,7 @@ return [
 
         [
             'text'    => 'Product Menu',
-            // 'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fab fa-product-hunt',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -334,7 +335,7 @@ return [
 
         [
             'text'    => 'Delivery Menu',
-            // 'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-truck',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -352,7 +353,7 @@ return [
 
         [
             'text'    => 'Discount Menu',
-            // 'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-tag',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -372,6 +373,7 @@ return [
             'text'=>'Manage Orders',
             'url'=>'order',
             'can'=>'merchant',
+            'icon'=>'fas fa-sort'
         ],
 
 
@@ -400,12 +402,14 @@ return [
             'text'=>'Billing Information',
             'url'=>'bill',
             'can'=>'customer',
+            'icon'=>'fas fa-file-invoice-dollar',
         ],
 
         [
             'text'=>'Manage Orders',
             'url'=>'customer/order',
             'can'=>'customer',
+            'icon'=>'fas fa-sort',
         ],
 
          [
@@ -417,17 +421,20 @@ return [
             'text'=>'Account Settings',
             'url'=>'merchant',
             'can'=>'merchant',
+            'icon'=>'fas fa-address-card',
         ],
         
         [
             'text'=>'Account Settings',
             'url'=>'customer',
             'can'=>'customer',
+            'icon'=>'fas fa-address-card',
         ],
 
          [
             'text'=>'Return To Store',
             'url'=>'/',
+            'icon'=>'fas fa-store',
         ],
        
     ],
