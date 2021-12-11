@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="hero__categories">
-                        <div class="hero__categories__all">
+                        <div class="hero__categories__all bg-success">
                             <i class="fa fa-bars"></i>
                             <span>All categories</span>
                         </div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="hero__search">
+                    <!-- <div class="hero__search">
                         <div class="hero__search__form">
                             <form action="#">
                                 <div class="hero__search__categories">
@@ -42,13 +42,13 @@
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="hero__item set-bg" data-setbg="{{asset('organi-asset/img/hero/banner-3.jpg')}}">
                         <div class="hero__text">
                             <span>NEGO E-COMM</span>
-                            <h2>We have what you need</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
+                            <h2 class="h2">We have what you need</h2>
+                            
+                            <a href="#" class="btn btn-solid btn-success">SHOP NOW</a>
                         </div>
                     </div>
                 </div>

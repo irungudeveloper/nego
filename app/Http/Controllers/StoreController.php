@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\Cart;
 
 class StoreController extends Controller
 {
@@ -19,9 +22,16 @@ class StoreController extends Controller
         //
         $products = Product::with('category')->get();
         $category = Category::with('product')->get();
+        $cart_count = 0;
+
+        if (Auth::check()) 
+        {
+            $cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
 
         return view('frontend.landing')->with('products',$products)
-                                        ->with('category',$category);
+                                        ->with('category',$category)
+                                        ->with('cart_count',$cart_count);
 
     }
 

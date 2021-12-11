@@ -37,7 +37,7 @@
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                        <li><a href="./shoping-cart.html">Shopping Cart</a></li>
                         <li><a href="./checkout.html">Check Out</a></li>
                         <li><a href="./blog-details.html">Blog Details</a></li>
                     </ul>
@@ -125,8 +125,11 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
+
+
                             
-                            <li><a href=" {{ route('cart.index') }} "><i class="fa fa-shopping-bag"></i> <span></span></a></li>
+                            <li><a href=" {{ route('cart.index') }} "><i class="fa fa-shopping-bag"></i> <span> {{ $cart_count }} </span></a></li>
+                        
                         </ul>
                         
                     </div>
