@@ -23,7 +23,15 @@ class DiscountController extends Controller
     {
         //
         $discount = Discount::with('product')->get();
-        return view('discount.index')->with('discount',$discount);
+
+        $active_codes = Discount::where('active',1)->count();
+        $inactive_codes = Discount::where('active',0)->count();
+        $total_codes = Discount::all()->count();
+
+        return view('discount.index')->with('discount',$discount)
+                                        ->with('active_codes',$active_codes)
+                                        ->with('inactive_codes',$inactive_codes)
+                                        ->with('total_codes',$total_codes);
 
     }
 

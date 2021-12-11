@@ -21,7 +21,18 @@ class ProductController extends Controller
         //
         $product = Product::where('user_id',Auth::user()->id)->get();
 
-        return view('product.index')->with('product',$product);
+        $total_products = Product::where('user_id',Auth::user()->id)->count();
+        $negotiable_products = Product::where('user_id',Auth::user()->id)
+                                            ->where('negotiable',1)
+                                            ->count();
+        $available_products = Product::where('user_id',Auth::user()->id)
+                                        ->where('availability_status',1)
+                                        ->count();
+
+        return view('product.index')->with('product',$product)
+                                    ->with('total_products',$total_products)
+                                    ->with('negotiable_products',$negotiable_products)
+                                    ->with('available_products',$available_products);
     }
 
     /**
@@ -58,7 +69,8 @@ class ProductController extends Controller
                     'product_retail_price'=>'required',
                     'product_final_price'=>'required',
                     'negotiable'=>'required',
-                    'availability_status'=>'required'
+                    'availability_status'=>'required',
+                    'product_price'=>'required',
         ];
 
         $validator = \Validator::make($request->all(),$rules);
@@ -83,6 +95,7 @@ class ProductController extends Controller
                 $product->availability_status = $request->input('availability_status');
                 $product->product_image = $request->file('product_image')->getClientOriginalName();
                 $product->user_id = Auth::user()->id;
+                $product->product_price = $request->input('product_price');
 
                 $product->save();
 
@@ -170,7 +183,8 @@ class ProductController extends Controller
                     'product_retail_price'=>'required',
                     'product_final_price'=>'required',
                     'negotiable'=>'required',
-                    'availability_status'=>'required'
+                    'availability_status'=>'required',
+                    'product_price'=>'required',
         ];
 
         
@@ -193,7 +207,8 @@ class ProductController extends Controller
                     'product_quantity'=>$request->input('product_quantity'),
                     'product_final_price'=>$request->input('product_final_price'),
                     'product_retail_price'=>$request->input('product_retail_price'),
-                    'availability_status'=>$request->input('availability_status'),        
+                    'availability_status'=>$request->input('availability_status'),   
+                    'product_price'=>$request->input('product_price'),     
                 ]);  
 
         $path = '/public/images/';

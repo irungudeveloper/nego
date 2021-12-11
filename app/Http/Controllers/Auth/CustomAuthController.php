@@ -80,8 +80,23 @@ class CustomAuthController extends Controller
 
     public function dashboard()
     {
-        if(Auth::check()){
-            return view('home');
+        if(Auth::check())
+        {
+
+            if (Auth::user()->role_id == 1) 
+            {
+                // code...
+
+                return redirect()->route('dashboard.merchant');
+            }
+            
+            if (Auth::user()->role_id == 2) 
+            {
+                // code...
+                return redirect()->route('dashboard.client');
+            }
+
+            // return view('home');
         }
   
         return redirect()->route('login')->withSuccess('You are not allowed to access');

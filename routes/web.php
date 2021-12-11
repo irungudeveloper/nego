@@ -14,6 +14,7 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,9 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/order/confirm',[OrderController::class,'confirmDelivery'])->name('confirm.order');
     Route::get('/order/{id}/confirm',[OrderController::class,'deliveryConfirm'])->name('delivery.confirm');
     Route::get('/order/{id}/cancel',[OrderController::class,'cancelOrder'])->name('order.cancel');
+
+    Route::get('/dashboard/merchant',[HomeController::class,'index'])->name('dashboard.merchant');
+    Route::get('/dashboard/client',[HomeController::class,'customer'])->name('dashboard.client');
 
 });
 

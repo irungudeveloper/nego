@@ -9,10 +9,26 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12 col-12 col-sm-12 col-lg-12 col-xs-12">
+        <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
             <div class="card">
-                <div class="card-body">
-                    <p><span>1</span> Products</p>
+                <div class="card-body bg-info">
+                    <p><span class="h3"> {{ $total_products }} </span> Total Products</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
+            <div class="card">
+                <div class="card-body bg-success">
+                    <p><span class="h3"> {{ $available_products }} </span> Available Products</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <p><span class="h3" > {{ $negotiable_products }} </span> Negotiable Products</p>
                 </div>
             </div>
             
@@ -23,13 +39,14 @@
         <div class="col-12 col-sm-12 col-lg-12 col-xs-12">
            <div class="card">
                <div class="card-body">
-                   <table id="category_table" class="table table-hover">
+                   <table id="category_table" class="table table-hover table-responsive">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Image</th>
                       <th scope="col">Product Quantity</th>
+                      <th scope="col">Product Price</th>
                       <th scope="col">Retail Price</th>
                       <th scope="col">Final Price</th>
                       <th scope="col">Negotiable</th>
@@ -44,6 +61,7 @@
                       <td>{{$data->product_name}}</td>
                       <td><img src="{{asset('storage/images/'.$data->product_image)}}" height="50px" width="50px"></td>
                       <td> {{$data->product_quantity}} </td>
+                      <td> {{ $data->product_price }} </td>
                       <td> {{ $data->product_retail_price }} </td>
                       <td> {{ $data->product_final_price }} </td>
                       <td> 

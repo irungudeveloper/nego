@@ -9,18 +9,26 @@
 
 @section('content')
     <div class="row">
-        <div class=" col-md-6 col-6 col-sm-12 col-lg-6 col-xs-6">
+        <div class=" col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
             <div class="card">
-                <div class="card-body">
-                    <p><span>1</span> All Discounts</p>
+                <div class="card-body bg-primary">
+                    <p><span class="h3"> {{ $total_codes }} </span> All Discounts</p>
                 </div>
             </div>
             
         </div>
-        <div class="col-md-6 col-6 col-sm-12 col-lg-6 col-xs-6">
+        <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
             <div class="card">
-                <div class="card-body">
-                    <p><span>2</span> Active Discounts</p>
+                <div class="card-body bg-success">
+                    <p><span class="h3"> {{ $active_codes }} </span> Active Discounts</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-4">
+            <div class="card">
+                <div class="card-body bg-secondary">
+                    <p><span class="h3"> {{ $inactive_codes }} </span> Inactive Discounts</p>
                 </div>
             </div>
             

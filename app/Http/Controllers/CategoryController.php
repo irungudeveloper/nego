@@ -17,7 +17,11 @@ class CategoryController extends Controller
     {
         //
         $category = Category::all();
-        return view('category.index')->with('category',$category);
+
+        $count = $category->count();
+
+        return view('category.index')->with('category',$category)
+                                    ->with('count',$count);
     }
 
     /**

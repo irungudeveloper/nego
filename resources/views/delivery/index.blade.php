@@ -9,18 +9,10 @@
 
 @section('content')
     <div class="row">
-        <div class=" col-md-6 col-6 col-sm-12 col-lg-6 col-xs-6">
+        <div class=" col-md-12 col-12 col-sm-12 col-lg-12 col-xs-12">
             <div class="card">
                 <div class="card-body">
-                    <p><span>12</span> Existing Zones</p>
-                </div>
-            </div>
-            
-        </div>
-        <div class="col-md-6 col-6 col-sm-12 col-lg-6 col-xs-6">
-            <div class="card">
-                <div class="card-body">
-                    <p><span>11</span>Population per zone</p>
+                    <p><span class="h3"> {{ $count }} </span> Delivery Zones</p>
                 </div>
             </div>
             

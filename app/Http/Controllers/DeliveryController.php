@@ -21,7 +21,10 @@ class DeliveryController extends Controller
         //
         $delivery = Delivery::where('user_id',Auth::user()->id)->get();
 
-        return view('delivery.index')->with('delivery',$delivery);
+        $count = $delivery->count();
+
+        return view('delivery.index')->with('delivery',$delivery)
+                                     ->with('count',$count);
     }
 
     /**

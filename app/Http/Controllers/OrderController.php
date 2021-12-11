@@ -24,7 +24,16 @@ class OrderController extends Controller
 
         $order = Order::with('product')->with('user.billing.delivery')->get();
 
-        return view('order.index')->with('order',$order);
+        $pending_orders = Order::where('delivery_status',0)->count();
+        $cancelled_orders = Order::where('delivery_status',3)->count();
+        $completed_orders = Order::where('delivery_status',1)->count();
+        $total_orders = Order::all()->count();
+
+        return view('order.index')->with('order',$order)
+                                    ->with('pending',$pending_orders)
+                                    ->with('cancelled',$cancelled_orders)
+                                    ->with('completed',$completed_orders)
+                                    ->with('total',$total_orders);
 
     }
 
@@ -34,7 +43,23 @@ class OrderController extends Controller
         // return response()->json('here');
         $order = Order::where('user_id',Auth::user()->id)->with('product')->with('user.billing.delivery')->get();
 
-        return view('order.customer')->with('order',$order);
+        $pending_orders = Order::where('user_id',Auth::user()->id)
+                                ->where('delivery_status',0)
+                                ->count();
+        $cancelled_orders = Order::where('user_id',Auth::user()->id)
+                                ->where('delivery_status',3)
+                                ->count();
+
+        $completed_orders = Order::where('user_id',Auth::user()->id)
+                                ->where('delivery_status',1)
+                                ->count();
+        $total_orders = Order::where('user_id',Auth::user()->id)->count();
+
+        return view('order.customer')->with('order',$order)
+                                        ->with('pending',$pending_orders)
+                                        ->with('cancelled',$cancelled_orders)
+                                        ->with('total',$total_orders)
+                                        ->with('completed',$completed_orders);
     }
 
     /**

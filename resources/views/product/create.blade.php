@@ -20,14 +20,19 @@
                     <label>Product Quantity</label>
                     <input type="number" name="product_quantity" class="form-control">
                     <div class="form-group row p-2">
-                        <div class="col-12 col-md-6 col-lg-6">
+                         <div class="col-12 col-md-4 col-lg-4 ">
+                            <label>Product Price</label>
+                            <input type="number" name="product_price" class="form-control">
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
                             <label>Product Retail Price</label>
                             <input type="number" name="product_retail_price" class="form-control">
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 ">
+                        <div class="col-12 col-md-4 col-lg-4 ">
                             <label>Product Final Price</label>
                             <input type="number" name="product_final_price" class="form-control">
                         </div>
+
                     </div>
                     <div class="form-group row p-2">
                         <div class="col-12 col-md-6 col-lg-6">

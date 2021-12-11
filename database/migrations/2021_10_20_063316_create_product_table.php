@@ -21,6 +21,7 @@ class CreateProductTable extends Migration
             $table->integer('user_id');
             $table->integer('brand_id');
             $table->integer('product_quantity');
+            $table->integer('product_price');
             $table->integer('product_retail_price');
             $table->integer('product_final_price');
             $table->integer('negotiable');

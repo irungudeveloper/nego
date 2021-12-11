@@ -16,7 +16,11 @@ class BrandController extends Controller
     {
         //
         $brand = Brand::all();
-        return view('brand.index')->with('brand',$brand);
+
+        $count = $brand->count();
+
+        return view('brand.index')->with('brand',$brand)
+                                    ->with('count',$count);
 
     }
 
