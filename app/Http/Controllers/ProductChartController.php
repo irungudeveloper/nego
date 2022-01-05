@@ -18,7 +18,32 @@ class ProductChartController extends Controller
 
     public function productChart()
     {
-        return view('charts.product');
+
+        $total_products = Product::where('user_id',Auth::user()->id)->count();
+        $negotiable_products = Product::where('user_id',Auth::user()->id)
+                                            ->where('negotiable',1)
+                                            ->count();
+        $available_products = Product::where('user_id',Auth::user()->id)
+                                        ->where('availability_status',1)
+                                        ->count();
+
+        $product_details = DB::select(
+                            DB::raw("SELECT product.id, product.product_name, product.product_image, product.product_quantity, COUNT(orders.product_id) AS units_sold, COALESCE(SUM(orders.amount),0) AS sales_amount , product.negotiable, product.availability_status, product.product_price
+                                FROM product
+                                LEFT JOIN orders ON product.id = orders.product_id
+                                GROUP BY product.id
+                                ORDER BY product.id;
+                                    "
+                            ));
+        
+
+        // return response()->json($product_details);
+
+        return view('charts.product')->with('total_products',$total_products)
+                                    ->with('negotiable_products',$negotiable_products)
+                                    ->with('available_products',$available_products)
+                                    ->with('product_details',$product_details);
+
      
     }
 
@@ -48,12 +73,28 @@ class ProductChartController extends Controller
     {
         // code...
 
-        $product_sales = DB::table('product')
-                            ->join('orders','product.id','=','orders.product_id')
-                            ->groupBy('product.id')
-                            ->sum('orders.amount');
+        $product_sales = DB::select(
+                            DB::raw(
+                                "SELECT product.id, product.product_name, SUM(orders.amount) AS productsale 
+                                FROM product
+                                INNER JOIN orders ON orders.product_id = product.id
+                                GROUP BY product.id
+                                ORDER BY product.id;"
+                        ));
 
-        return response()->json($product_sales);                    
+        $label = array();
+        $values = array();
+
+        foreach($product_sales as $data)
+        {
+            array_push($label, $data->product_name);
+            array_push($values, $data->productsale);
+        }
+
+        return response()->json([
+                                    'labels'=>$label,
+                                    'values'=>$values
+                                ]);                    
     }
 
 }

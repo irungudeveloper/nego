@@ -376,6 +376,29 @@ return [
             'icon'=>'fas fa-sort'
         ],
 
+         [
+            'header'=>'ANALYTICS CONTROLS',
+            'shift' => 'mb-2',
+            
+        ],
+
+        [
+            'text'    => 'Charts Menu',
+            'icon'    => 'fa fa-area-chart',
+            'can'=>'merchant',
+            'submenu' => [
+                [
+                    'text' => 'Products Analytics',
+                    'url'  => 'chart/product',
+                    'shift' => 'ml-2',
+                ],
+                // [
+                //     'text' => 'Manage Discount Codes',
+                //     'url'  => 'discount',
+                //     'shift' => 'ml-2',
+                // ],
+            ],
+        ],
 
 
 

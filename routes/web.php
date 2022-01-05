@@ -83,11 +83,12 @@ Route::middleware(['auth'])->group(function ()
 
     Route::get('/dashboard/merchant',[HomeController::class,'index'])->name('dashboard.merchant');
     Route::get('/dashboard/client',[HomeController::class,'customer'])->name('dashboard.client');
-
+    Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
 });
 
 Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
 Route::get('/chart/product/stock',[ProductChartController::class,'productStock'])->name('chart.product.stock');
+Route::get('/chart/product/sale',[ProductChartController::class,'productSale'])->name('chart.sale');
 
 Route::get('/chart/product/sale',[ProductChartController::class,'productSale'])->name('chart.product.sale');
 
