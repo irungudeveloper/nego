@@ -14,7 +14,7 @@
 
                         
                             @forelse($category as $data)
-                            <li><a href="#">{{$data->category_name}}</a></li>
+                            <li><a href=" {{ route('store.category',$data->id) }} ">{{$data->category_name}}</a></li>
                             @empty
                             <li><a href="#">No Categories Avaliable</a></li>
                             @endforelse

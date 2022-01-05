@@ -24,7 +24,7 @@
                             <li class="active" data-filter="*">All</li>
                             @forelse($category as $data)
                             
-                            <li data-filter=".oranges">{{$data->category_name}}</li>
+                            <a href=" {{ route('store.category',$data->id) }} " class=" pr-2 pl-2"><li data-filter=".oranges">{{$data->category_name}}</li></a>
                             @empty
                             <li data-filter=".oranges">No data available</li>
                             @endforelse

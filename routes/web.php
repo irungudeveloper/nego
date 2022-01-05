@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\ProductChartController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::get('/', function () {
 })->name('/');
 
 Route::resource('/store',StoreController::class);
+Route::get('/store/category/{id}',[StoreController::class,'categoryProducts'])->name('store.category');
 Route::get('product/{id}/details',[StoreController::class,'single'])->name('product.single');
 
 // Auth::routes();
@@ -83,6 +85,11 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/dashboard/client',[HomeController::class,'customer'])->name('dashboard.client');
 
 });
+
+Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
+Route::get('/chart/product/stock',[ProductChartController::class,'productStock'])->name('chart.product.stock');
+
+Route::get('/chart/product/sale',[ProductChartController::class,'productSale'])->name('chart.product.sale');
 
 Route::get('register',[CustomAuthController::class,'registration'])->name('register');
 Route::get('merchant/create',[CustomAuthController::class,'merchant'])->name('merchant.create');

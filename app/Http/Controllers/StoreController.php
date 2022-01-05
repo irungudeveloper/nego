@@ -12,6 +12,8 @@ use App\Models\Cart;
 
 class StoreController extends Controller
 {
+
+    private $cart_count;
     /**
      * Display a listing of the resource.
      *
@@ -22,16 +24,16 @@ class StoreController extends Controller
         //
         $products = Product::with('category')->get();
         $category = Category::with('product')->get();
-        $cart_count = 0;
+        $this->cart_count = 0;
 
         if (Auth::check()) 
         {
-            $cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
         }
 
         return view('frontend.landing')->with('products',$products)
                                         ->with('category',$category)
-                                        ->with('cart_count',$cart_count);
+                                        ->with('cart_count',$this->cart_count);
 
     }
 
@@ -39,9 +41,32 @@ class StoreController extends Controller
     {
         // code...
         $product = Product::findOrFail($id);
+        $this->cart_count = 0;
 
-        return view('frontend.single')->with('product',$product);
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('frontend.single')->with('product',$product)
+                                      ->with('cart_count',$this->cart_count);
     }
+
+    public function categoryProducts($id)
+    {
+        $category = Category::where('id',$id)->with('product')
+                                            ->get();
+        $this->cart_count = 0;
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('frontend.category')->with('category',$category)
+                                        ->with('cart_count',$this->cart_count);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

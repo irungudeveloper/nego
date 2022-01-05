@@ -101,12 +101,5 @@ class CheckoutController extends Controller
         //
     }
 
-    public function mpesa(Request $request)
-    {
-        $phone_number = 254799401110;
-        $amount = 2;
-        $stk_push = new mpesa_utils;
-
-        return response()->json([$stk_push->onlineCheckout($phone_number,$amount)]);
-    }
+    
 }
