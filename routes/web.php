@@ -17,6 +17,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\ProductChartController;
+use App\Http\Controllers\SalesChartController;
 use App\Http\Controllers\Auth\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,7 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/dashboard/merchant',[HomeController::class,'index'])->name('dashboard.merchant');
     Route::get('/dashboard/client',[HomeController::class,'customer'])->name('dashboard.client');
     Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
+    Route::get('/chart/sales',[SalesChartController::class,'index'])->name('sales.index');
 });
 
 Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
@@ -91,6 +93,10 @@ Route::get('/chart/product/stock',[ProductChartController::class,'productStock']
 Route::get('/chart/product/sale',[ProductChartController::class,'productSale'])->name('chart.sale');
 
 Route::get('/chart/product/sale',[ProductChartController::class,'productSale'])->name('chart.product.sale');
+
+Route::get('/chart/sales/total',[SalesChartController::class,'totalSales'])->name('sales.total');
+Route::get('/chart/sales/product',[SalesChartController::class,'salesByProduct'])->name('sales.product');
+Route::get('/chart/sales/discount',[SalesChartController::class,'productDiscount'])->name('sales.discount');
 
 Route::get('register',[CustomAuthController::class,'registration'])->name('register');
 Route::get('merchant/create',[CustomAuthController::class,'merchant'])->name('merchant.create');

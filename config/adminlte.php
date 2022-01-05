@@ -384,7 +384,7 @@ return [
 
         [
             'text'    => 'Charts Menu',
-            'icon'    => 'fa fa-area-chart',
+            'icon'    => 'fas fa-area-chart',
             'can'=>'merchant',
             'submenu' => [
                 [
@@ -392,11 +392,11 @@ return [
                     'url'  => 'chart/product',
                     'shift' => 'ml-2',
                 ],
-                // [
-                //     'text' => 'Manage Discount Codes',
-                //     'url'  => 'discount',
-                //     'shift' => 'ml-2',
-                // ],
+                [
+                    'text' => 'Sales Analytics',
+                    'url'  => 'chart/sales',
+                    'shift' => 'ml-2',
+                ],
             ],
         ],
 
