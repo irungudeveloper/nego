@@ -19,6 +19,10 @@ use App\Http\Controllers\TasksController;
 use App\Http\Controllers\ProductChartController;
 use App\Http\Controllers\SalesChartController;
 use App\Http\Controllers\Auth\CustomAuthController;
+use App\Http\Controllers\BotManController;
+use App\BotMan\NegotiationConversation;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -86,6 +90,11 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/dashboard/client',[HomeController::class,'customer'])->name('dashboard.client');
     Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
     Route::get('/chart/sales',[SalesChartController::class,'index'])->name('sales.index');
+
+    Route::get('nego',[NegotiationConversation::class,'getProduct'])->name('nego.data');
+    Route::get('nego/validity',[NegotiationConversation::class,'checkValidity'])->name('nego.validity');
+    Route::get('nego/discount',[NegotiationConversation::class,'generateDiscountCode'])->name('nego.discount');
+
 });
 
 Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
@@ -109,3 +118,10 @@ Route::get('login',[CustomAuthController::class,'index'])->name('login');
 Route::post('login',[CustomAuthController::class,'customLogin'])->name('login.create');
 Route::get('dashboard',[CustomAuthController::class,'dashboard'])->name('dashboard');
 Route::get('logout',[CustomAuthController::class,'signOut'])->name('logout');
+
+Route::match(['get', 'post'], 'botman', [BotManController::class, 'handle']);
+
+
+Route::get('nego',[NegotiationConversation::class,'getProduct'])->name('nego.data');
+Route::get('nego/validity',[NegotiationConversation::class,'checkValidity'])->name('nego.validity');
+Route::get('nego/discount',[NegotiationConversation::class,'generateDiscountCode'])->name('nego.discount');

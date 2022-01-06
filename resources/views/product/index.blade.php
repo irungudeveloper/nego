@@ -39,7 +39,7 @@
         <div class="col-12 col-sm-12 col-lg-12 col-xs-12">
            <div class="card">
                <div class="card-body">
-                   <table id="category_table" class="table table-hover table-responsive">
+                <table id="category_table" class="table table-hover table-responsive">
                   <thead>
                     <tr>
                       <th scope="col">#</th>

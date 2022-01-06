@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\Cart;
 
+use Session;
+
 class StoreController extends Controller
 {
 
@@ -47,6 +49,17 @@ class StoreController extends Controller
         {
             $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
         }
+
+        // $product_id
+
+        // foreach($product as $data)
+        // {
+        //     $product_id = $data->id;
+        // }
+
+        // return response()->json($product->id);
+
+        Session::put('product_id',$product->id);
 
         return view('frontend.single')->with('product',$product)
                                       ->with('cart_count',$this->cart_count);

@@ -142,3 +142,18 @@
 @section('footer')
 	@include('frontend.footer')
 @stop
+
+@section('script')
+    //...
+    //...
+<script>
+  var botmanWidget = {
+  aboutText: 'Write Something',
+  introMessage: "✋ Hello!"
+  };
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
+  
+      
+@stop
