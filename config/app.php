@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MpesaServiceProvider::class,
+        Gathuku\Mpesa\MpesaServiceProvider::class,
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Mpesa'=>App\helper\mpesa_utils::class,
+        'Gathuku' => Gathuku\Mpesa\Facades\Mpesa::class,
 
     ],
 

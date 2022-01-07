@@ -77,7 +77,7 @@ namespace App\helper;
       		"PartyA"=> $phone_number,
       		"PartyB"=> $this->paybill,
       		"PhoneNumber"=> $phone_number,
-        	"CallBackURL"=> "http://localhost.com",
+        	"CallBackURL"=> "https://localhost.com",
       		"AccountReference"=> $phone_number,
       		"TransactionDesc"=>"Some desc"
 		  );
@@ -132,6 +132,8 @@ namespace App\helper;
 		  
 		  $curl_response = curl_exec($curl);
 		  $response = json_decode($curl_response, true);
+
+		  // return response()->json($response);
 	  
 		  if ($response["ResultCode"]!="0") 
 		  {

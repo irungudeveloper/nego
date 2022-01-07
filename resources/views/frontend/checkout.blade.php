@@ -221,49 +221,52 @@
                     var phone_number = $('#phone_number').val();
                     var amount = $('#amount').val();
 
+                    // var amount = 1;
+
                     console.log(phone_number);
                     console.log(amount);
 
-                    // $.ajax({
-                    //     url:"pay/mpesa",
-                    //     type:"POST",
-                    //     data:{
-                    //          "_token": "{{ csrf_token() }}",
-                    //          phone_number:phone_number,
-                    //          amount:amount,
-                    //     },
-                    //     success: function(response)
-                    //     {
-                    //         console.table(response);
-                    //         $('#initiate').hide();
-                    //         $('#process').show();
+                    $.ajax({
+                        url:"pay/mpesa",
+                        type:"POST",
+                        data:{
+                             "_token": "{{ csrf_token() }}",
+                             phone_number:phone_number,
+                             amount:amount,
+                        },
+                        success: function(response)
+                        {
+                            console.table(response);
+                            $('#initiate').hide();
+                            $('#process').show();
 
-                    //         checkoutID = response;
+                            checkoutID = response;
+
                             
-                            // setTimeout(function()
-                            // {
-                                // $('#process').hide();
-                                // $('#confirm').show();
-                                // $.ajax(
-                                // {
+                            setTimeout(function()
+                            {
+                                $('#process').hide();
+                                $('#confirm').show();
+                                $.ajax(
+                                {
 
-                                //      url:"mpesa/confirm",
-                                //      type:"POST",
-                                //      data:{
-                                //               "_token": "{{ csrf_token() }}",
-                                //              checkoutID:checkoutID,
+                                     url:"mpesa/confirm",
+                                     type:"POST",
+                                     data:{
+                                              "_token": "{{ csrf_token() }}",
+                                             checkoutID:checkoutID,
                             
-                                //             },
-                                //     success: function(response)
-                                //     {
-                                //         console.table(response);
+                                            },
+                                    success: function(response)
+                                    {
+                                        console.table(response);
 
-                                //         if (response == false) 
-                                //         {
-                                //             $('#failed').show();
-                                //         }
-                                //         else
-                                //         {
+                                        if (response == false) 
+                                        {
+                                            $('#failed').show();
+                                        }
+                                        else
+                                        {
                                             $.ajax(
                                             {
                                                 url:"order",
@@ -281,24 +284,24 @@
                                                     console.table(response);
                                                 },
                                             });
-                                //         };
+                                        };
 
-                                //         $('#confirm').hide();
-                                //     },
-                                //     error: function(response) 
-                                //     {
-                                //       console.table(response);
+                                        $('#confirm').hide();
+                                    },
+                                    error: function(response) 
+                                    {
+                                      console.table(response);
 
-                                //     },
-                                // });
+                                    },
+                                });
 
-                            // },7000);
-                    //     },
-                    //     error: function(response)
-                    //     {
-                    //         console.log(response);
-                    //     },
-                    // });
+                            },10000);
+                        },
+                        error: function(response)
+                        {
+                            console.log(response);
+                        },
+                    });
 
                 });
 

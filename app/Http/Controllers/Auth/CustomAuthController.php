@@ -8,10 +8,14 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class CustomAuthController extends Controller
 {
-     public function index()
+
+    private $cart_count;
+
+    public function index()
     {
         return view('auth.login');
     }  
@@ -36,17 +40,41 @@ class CustomAuthController extends Controller
 
     public function registration()
     {
-        return view('account');
+
+        $this->cart_count = 0;
+
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('account')->with('cart_count',$this->cart_count);
     }
 
     public function merchant()
     {
-        return view('vendor.adminlte.auth.merchant_register');
+
+        $this->cart_count = 0;
+
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('vendor.adminlte.auth.merchant_register')->with('cart_count',$this->cart_count);
     }
      
      public function customer()
     {
-        return view('vendor.adminlte.auth.customer_register');
+
+        $this->cart_count = 0;
+
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('vendor.adminlte.auth.customer_register')->with('cart_count',$this->cart_count);
     }
 
     public function customRegistration(Request $request)

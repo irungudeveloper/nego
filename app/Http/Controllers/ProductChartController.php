@@ -28,11 +28,10 @@ class ProductChartController extends Controller
                                         ->count();
 
         $product_details = DB::select(
-                            DB::raw("SELECT product.id, product.product_name, product.product_image, product.product_quantity, COUNT(orders.product_id) AS units_sold, COALESCE(SUM(orders.amount),0) AS sales_amount , product.negotiable, product.availability_status, product.product_price
+                            DB::raw("SELECT product.id, product.product_name, product.product_image, product.product_quantity, COALESCE(SUM(orders.quantity),0) AS units_sold, COALESCE(SUM(orders.amount),0) AS sales_amount , product.negotiable, product.availability_status, product.product_price
                                 FROM product
                                 LEFT JOIN orders ON product.id = orders.product_id
-                                GROUP BY product.id
-                                ORDER BY product.id;
+                                GROUP BY orders.product_id;
                                     "
                             ));
         
