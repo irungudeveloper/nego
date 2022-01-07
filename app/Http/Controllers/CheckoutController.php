@@ -21,6 +21,9 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $cart_count;
+
     public function index()
     {
         //
@@ -29,10 +32,18 @@ class CheckoutController extends Controller
         $customer = Customer::where('user_id',Auth::user()->id)->get();
         $cart = Cart::where('user_id',Auth::user()->id)->get();
 
+         $this->cart_count = 0;
+
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
         return view('frontend.checkout')->with('delivery',$delivery)
                                         ->with('billing',$billing)
                                         ->with('cart',$cart)
-                                        ->with('customer',$customer);
+                                        ->with('customer',$customer)
+                                        ->with('cart_count',$this->cart_count);
     }
 
     /**

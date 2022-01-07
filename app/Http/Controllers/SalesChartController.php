@@ -60,9 +60,9 @@ class SalesChartController extends Controller
         {
             // code...
             array_push($label,$data->product_name);
-            array_push($revenue,$data->total_purchase_price);
-            array_push($income,$data->total_selling_price);
-            array_push($profit,$data->total_profit);
+            array_push($revenue,(int)$data->total_purchase_price);
+            array_push($income,(int)$data->total_selling_price);
+            array_push($profit,(int)$data->total_profit);
         }
 
         return response()->json([
@@ -79,10 +79,11 @@ class SalesChartController extends Controller
 
         $product_discount = DB::select(
                             DB::raw("
-                                   SELECT product.product_name,SUM(product.product_retail_price*(discount.percentage/100)) AS discount_amount
+                                   SELECT product.id,product.product_name, AVG(discount.percentage) AS average_discount
                                     FROM product
                                     INNER JOIN discount ON product.id = discount.product_id
-                                    ORDER BY discount.product_id
+                                    GROUP BY product.id
+                                    ORDER BY product.id
                                 "));   
         $label = array();
         $value = array();
@@ -90,7 +91,7 @@ class SalesChartController extends Controller
         foreach($product_discount as $data)
         {
             array_push($label,$data->product_name);
-            array_push($value,$data->discount_amount);
+            array_push($value,(int)$data->average_discount);
         }     
 
         return response()->json(['label'=>$label,'values'=>$value]);

@@ -24,7 +24,9 @@ class NegotiationConversation extends Conversation
     protected $email;
     protected $query;
     protected $product_details;
-    protected $percentage;
+    protected $system_percentage = 1;
+    protected $customer_percentage = 0;
+    protected $offer_count = 1;
 
     public function askName()
     {
@@ -52,24 +54,36 @@ class NegotiationConversation extends Conversation
 		{
 			if ($answer->getValue() == 1) 
 			{
-				$question = Question::create('I can offer 1% off of the product, will this suffice?')->addButtons(
-							[
-								Button::create('Yes')->value(1),
-								Button::create('No')->value(0),
-							]);
 
-				$this->ask($question,function($answer)
-				{
-					if ($answer->getValue() == 0) 
-					{
-					$this->ask('Please enter the percentage discount you wish to gain', function(Answer $answer)
-						{
-							$this->percentage = $answer->getText();
-							$this->say('You said '. $this->percentage);
-						});
-					}
-				});
+                if ($this->checkAuth() == 1) 
+                {
+                    // code...
+                    $this->midNegotiation();
+                }
+                else
+                {
+                    $question = Question::create('Please Login to your account / Create an account to begin negotiations')->addButtons(
+                        [
+                            
+                            Button::create('No, thank you')->value(0),
+                        
+                        ]);
+                    
+                    $this->ask($question,function($answer)
+                        {
+                            if ($answer->getValue()==0) 
+                            {
+                                // code...
+                                $this->thankYou();
+                            }
+                        });
+                }
+
 			}
+            else
+            {
+                $this->thankYou();
+            }
 			// $this->say('You said'.$answer->getValue());
 		});
     }
@@ -103,11 +117,26 @@ class NegotiationConversation extends Conversation
 
    }
 
-   public function generateDiscountCode()
+   public function checkAuth()
+   {
+       // code...
+
+        if (Auth::check()) 
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+   }
+
+   public function generateDiscountCode($percentage)
    {
    	// code...
 
-   		$percentage = 50;
+   		// $percentage = 50;
    		$details = $this->getProduct();
 
    		$id = $details->id;
@@ -131,25 +160,382 @@ class NegotiationConversation extends Conversation
             try 
             {
                 $discount->save();
-                return response()->json($discount);
+                
+                $this->ask('Please use the discount code '.$discount->code.' upon checkout to activate your discount',function(Answer $answer)
+                {
+                    $this->thankYou();
+                });
+
             } 
             catch (Exception $e) 
             {
-                return response()->json('Not able to create discount code');
+                $this->ask('Cannot generate discount code at the moment, please ty again later', function(Answer $answer)
+                {
+                    $this->thankYou();
+                });
             }
    		}
    		else
    		{
-   			return response()->json('Too high a percentage');
+   			$this->thankYou();
    		}
 
    }
 
-   public function midNegotiation($percentage)
+   public function midNegotiation()
    {
    	// code...
+        // $this->percentage = 1;
 
-   		// $question = 
+                $question = Question::create('I can offer '.$this->system_percentage.'% off of the product, will this suffice?')->addButtons(
+                            [
+                                Button::create('Yes')->value(1),
+                                Button::create('No')->value(0),
+                            ]);
+
+                $this->ask($question,function($answer)
+                {
+                    if ($answer->getValue() == 0) 
+                    {
+                        $this->negotiationLoop();
+                    }
+                    else
+                    {
+                        $this->generateDiscountCode($this->system_percentage);   
+                    }
+                });
+
+   }
+
+
+   public function negotiationLoop()
+   {
+       // code...
+        $this->ask('Please enter the percentage discount you wish to gain', function(Answer $answer)
+        {
+            $this->customer_percentage = (int)$answer->getText();
+
+                if ($this->offer_count < 3) 
+                {
+                    // code...
+
+                    $this->offer1();
+
+                   // $this->ask('the offer count is '.$this->offer_count, function(Answer $answer)
+                   // {
+
+                   // });
+                }
+                else
+                {
+                    if($this->checkValidity($this->customer_percentage) == 1)
+                    {
+                        $this->generateDiscountCode($this->customer_percentage);
+                    }
+                    else
+                    {
+                        $this->offer4();
+                    }
+                }
+
+        });
+
+   }
+
+    public function offer1()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+        {
+            $this->system_percentage +=0.45;
+        }
+
+        $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+            [
+                Button::create('Yes')->value(1),
+                Button::create('No')->value(0),
+            ]);
+
+        $this->ask($question,function($answer)
+        {
+            if ($answer->getValue() == 1) 
+            {
+                // code...
+                $this->generateDiscountCode($this->system_percentage);
+            }
+            else
+            {
+
+                $this->ask('What is your counter offer',function(Answer $answer)
+                {
+                    $this->customer_percentage = (int)$answer->getText();
+                    $this->offer2();
+                });
+            }
+        });
+
+   }
+
+    public function offer2()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+        {
+            $this->system_percentage +=0.45;
+        }
+
+        $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+            [
+                Button::create('Yes')->value(1),
+                Button::create('No')->value(0),
+            ]);
+
+        $this->ask($question,function($answer)
+        {
+            if ($answer->getValue() == 1) 
+            {
+                // code...
+                $this->generateDiscountCode($this->system_percentage);
+            }
+            else
+            {
+
+                $this->ask('What is your counter offer',function(Answer $answer)
+                {
+                    $this->customer_percentage = (int)$answer->getText();
+                    $this->offer3();
+                });
+            }
+        });
+
+   }
+
+   public function offer3()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if($this->checkValidity($this->customer_percentage) == 1)
+        {
+           $this->generateDiscountCode($this->customer_percentage); 
+        }
+        else
+        {
+            
+            if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+            {
+                $this->system_percentage +=0.45;
+            }
+
+            $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+                [
+                    Button::create('Yes')->value(1),
+                    Button::create('No')->value(0),
+                ]);
+
+            $this->ask($question,function($answer)
+            {
+                if ($answer->getValue() == 1) 
+                {
+                    // code...
+                    $this->generateDiscountCode($this->system_percentage);
+                }
+                else
+                {
+                    $this->ask('What is your counter offer',function(Answer $answer)
+                    {
+                        $this->customer_percentage = (int)$answer->getText();
+                        $this->offer4();
+                    });
+                }
+            });
+
+        }
+
+   }
+
+   public function offer4()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if($this->checkValidity($this->customer_percentage) == 1)
+        {
+           $this->generateDiscountCode($this->customer_percentage); 
+        }
+        else
+        {
+            
+            if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+            {
+                $this->system_percentage +=0.45;
+            }
+
+            $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+                [
+                    Button::create('Yes')->value(1),
+                    Button::create('No')->value(0),
+                ]);
+
+            $this->ask($question,function($answer)
+            {
+                if ($answer->getValue() == 1) 
+                {
+                    // code...
+                    $this->generateDiscountCode($this->system_percentage);
+                }
+                else
+                {
+                   $this->ask('What is your counter offer',function(Answer $answer)
+                    {
+                        $this->customer_percentage = (int)$answer->getText();
+                        $this->offer5();
+                    });
+                }
+            });
+
+        }
+
+   }
+
+   public function offer5()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if($this->checkValidity($this->customer_percentage) == 1)
+        {
+           $this->generateDiscountCode($this->customer_percentage); 
+        }
+        else
+        {
+            
+            if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+            {
+                $this->system_percentage +=0.45;
+            }
+
+            $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+                [
+                    Button::create('Yes')->value(1),
+                    Button::create('No')->value(0),
+                ]);
+
+            $this->ask($question,function($answer)
+            {
+                if ($answer->getValue() == 1) 
+                {
+                    // code...
+                    $this->generateDiscountCode($this->system_percentage);
+                }
+                else
+                {
+                    $this->ask('What is your counter offer',function(Answer $answer)
+                    {
+                        $this->customer_percentage = (int)$answer->getText();
+                        $this->offer6();
+                    });
+                }
+            });
+
+        }
+
+   }
+
+   public function offer6()
+   {
+       // code...
+
+        $this->offer_count++;
+
+        if($this->checkValidity($this->customer_percentage) == 1)
+        {
+           $this->generateDiscountCode($this->customer_percentage); 
+        }
+        else
+        {
+            
+            if ($this->checkValidity($this->system_percentage+0.45) == 1) 
+            {
+                $this->system_percentage +=0.45;
+            }
+
+            $question = Question::create('Unfortunately, I cannot accept your offer of '.$this->customer_percentage.'% Would you consider accepting a '.($this->system_percentage).'% discount on the product')->addButtons(
+                [
+                    Button::create('Yes')->value(1),
+                    Button::create('No')->value(0),
+                ]);
+
+            $this->ask($question,function($answer)
+            {
+                if ($answer->getValue() == 1) 
+                {
+                    // code...
+                    $this->generateDiscountCode($this->system_percentage);
+                }
+                else
+                {
+                   $this->breakDown();
+                }
+            });
+
+        }
+
+   }
+
+   public function breakDown()
+   {
+       // code...
+        $question = Question::create('I apologize we could not find a common ground, would you consider negoiating with the merchant directly?')->addButtons(
+            [
+                Button::create('Yes, I would')->value(1),
+                Button::create('No, thank you')->value(0),
+            ]);
+
+        $this->ask($question,function($answer)
+        {
+            if ($answer->getValue() == 1) 
+            {
+                $this->getEmail();
+            }
+            else
+            {
+                $this->thankYou();
+            }
+        });
+
+   }
+
+   public function getEmail()
+   {
+       // code...
+        $this->ask('Please provide your email and the merchant will contact you shortly', function(Answer $answer)
+        {   
+            $this->email = $answer->getText();
+
+            $this->thankYou();
+
+        });
+   }
+
+   public function thankYou()
+   {
+       // code...
+        $question = Question::create('It was a pleasure meeting you '.$this->name);
+
+        $this->ask($question,function(Answer $answer)
+        {
+            $this->askName();
+        });
 
    }
 

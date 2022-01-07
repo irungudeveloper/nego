@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function ()
     Route::resource('/product',ProductController::class);
     Route::resource('/cart',CartController::class);
     Route::post('/update/cart',[CartController::class,'cartUpdate'])->name('update.cart');
+    Route::get('/delete/cart/{id}',[CartController::class,'deleteItem'])->name('delete.cart');
     Route::get('merchant',[MerchantController::class,'index'])->name('merchant');
     Route::post('merchant/store',[MerchantController::class,'store'])->name('merchant.store');
     Route::get('customer',[CustomerController::class,'index'])->name('customer');
@@ -91,9 +92,6 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
     Route::get('/chart/sales',[SalesChartController::class,'index'])->name('sales.index');
 
-    Route::get('nego',[NegotiationConversation::class,'getProduct'])->name('nego.data');
-    Route::get('nego/validity',[NegotiationConversation::class,'checkValidity'])->name('nego.validity');
-    Route::get('nego/discount',[NegotiationConversation::class,'generateDiscountCode'])->name('nego.discount');
 
 });
 
@@ -125,3 +123,4 @@ Route::match(['get', 'post'], 'botman', [BotManController::class, 'handle']);
 Route::get('nego',[NegotiationConversation::class,'getProduct'])->name('nego.data');
 Route::get('nego/validity',[NegotiationConversation::class,'checkValidity'])->name('nego.validity');
 Route::get('nego/discount',[NegotiationConversation::class,'generateDiscountCode'])->name('nego.discount');
+Route::get('nego/auth',[NegotiationConversation::class,'checkAuth'])->name('nego.auth');

@@ -84,10 +84,8 @@
                                     <td class="shoping__cart__total">
                                        ksh. {{ $data->total_cost }} 
                                     </td>
-                                    <td>
-                                    	
-
-                                        
+                                    <td class="p-4">
+                                    	<a href=" {{ route('delete.cart',$data->id) }} " class="btn btn-solid btn-danger"> X </a>
                                     </td>
                                 </tr>
 

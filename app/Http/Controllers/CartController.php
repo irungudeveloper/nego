@@ -14,6 +14,9 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
+    private $cart_count;
+
     public function index()
     {
         //
@@ -22,8 +25,14 @@ class CartController extends Controller
                       ->where('cart_status',1)
                       ->with('product')
                       ->get();
+        $this->cart_count = 0;
 
-        return view('frontend.cart')->with('cart',$cart);
+        if (Auth::check()) 
+        {
+            $this->cart_count = (int)Cart::where('user_id',Auth::user()->id)->count();
+        }
+
+        return view('frontend.cart')->with('cart',$cart)->with('cart_count',$this->cart_count);
 
     }
 
@@ -141,6 +150,23 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function deleteItem($id)
+    {
+        //
+        $cart = Cart::findOrFail($id);
+
+        try 
+        {
+            $cart->delete();
+            return redirect()->route('cart.index');    
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json(['message'=>'error']);    
+        }
+    }
+
     public function destroy($id)
     {
         //

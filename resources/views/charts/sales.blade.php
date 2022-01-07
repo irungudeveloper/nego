@@ -44,7 +44,7 @@
    </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-7">
             <div class="card">
                 <div class="card-header">
                     <h4 class="text-center h4">Sales By Product</h4>
@@ -54,10 +54,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 col-md-5">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="text-center h4">Discount Graph</h4>
+                    <h4 class="text-center h4">Average Product Discount</h4>
                 </div>
                 <div class="card-body">
                     <canvas id="discountSaleChart" width="200" height="200"></canvas>
