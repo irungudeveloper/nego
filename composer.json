@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laraveldaily/laravel-charts": "^0.1.28",
-        "livewire/livewire": "^2.7"
+        "livewire/livewire": "^2.7",
+        "stripe/stripe-php": "^7.110"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
