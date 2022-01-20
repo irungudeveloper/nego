@@ -49,7 +49,11 @@
                         
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
+                            <li><b>Negotiations:</b> <span>Open.</span></li>
+                            <li>To begin negotiations, click on the message widget at the bottom right of the screen to begin negotiations</li>
                         </ul>
+
+
                         </form>
                     </div>
                 </div>
