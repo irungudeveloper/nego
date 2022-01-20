@@ -12,6 +12,7 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\FailedNegotiation;
+use App\Http\Controllers\TestNotification as Save;
 
 use App\Models\Product;
 use App\Models\User;
@@ -32,6 +33,7 @@ class NegotiationConversation extends Conversation
     protected $offer_count = 1;
     protected $product_name;
     protected $user_id;
+    protected $product_id;
 
     public function askName()
     {
@@ -146,7 +148,7 @@ class NegotiationConversation extends Conversation
    		// $percentage = 50;
    		$details = $this->getProduct();
 
-   		$id = $details->id;
+   		$this->product_id = $details->id;
 
    		if ($this->checkValidity($percentage) == 1) 
    		{
@@ -160,7 +162,7 @@ class NegotiationConversation extends Conversation
             $discount = new Discount;
             $discount->code = $random;
             $discount->active = 1;
-            $discount->product_id = $id;
+            $discount->product_id = $this->product_id;
             $discount->percentage = $percentage;
             $discount->user_id = Auth::user()->id;
 
@@ -279,8 +281,8 @@ class NegotiationConversation extends Conversation
                 $this->ask('What is your counter offer',function(Answer $answer)
                 {
                     $this->customer_percentage = (int)$answer->getText();
-                    $this->offer2();
-                    // $this->breakDown();
+                    // $this->offer2();
+                    $this->breakDown();
                 });
             }
         });
@@ -530,6 +532,10 @@ class NegotiationConversation extends Conversation
         $this->ask('Please provide your email and the merchant will contact you shortly', function(Answer $answer)
         {   
             $this->email = $answer->getText();
+
+            $save = new Save;
+            $status = 0;
+            $save->store($this->user_id,Auth::user()->id,$this->product_details->id,$this->customer_percentage,$status);
 
             $contact_data = [
                                 'user_name'=>$this->name,

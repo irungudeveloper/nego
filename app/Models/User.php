@@ -67,4 +67,16 @@ class User extends Authenticatable
         // code...
         return $this->hasOne(Billing::class,'user_id','id');
     }
+
+    public function merchant_notification()
+    {
+        return $this->hasMany(Nofication::class,'merchant_id','id');
+        // code...
+    }
+
+    public function customer_notification()
+    {
+        // code...
+        return $this->hasMany(Notification::class,'customer_id','id');
+    }
 }

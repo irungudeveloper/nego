@@ -54,7 +54,8 @@ class FailedNegotiation extends Notification
                     ->line('The negotiations with '.$this->contact_data['user_name'].' have failed. However, they wish to negotiate further with you')
                     ->line('The client wanted a '.$this->contact_data['percentage_discount'].'% discount on '.$this->contact_data['product_name'].' product available at your store.')
                     ->line('To proceed with negotiations, contact the client through '.$this->contact_data['user_email'])
-                    ->action('Notification Action', url('/'))
+                    ->line('You can also view pending negotiations through the link provided below')
+                    ->action('Negotiaitons', url('/merchant/negotiate'))
                     ->line($this->contact_data['thank_you']);
     }
 

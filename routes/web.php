@@ -96,6 +96,10 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/chart/product',[ProductChartController::class,'productChart'])->name('chart.product');
     Route::get('/chart/sales',[SalesChartController::class,'index'])->name('sales.index');
 
+    Route::get('/notification',[TestNotification::class,'index'])->name('notification.index');
+    Route::get('/notification/{id}/update/{status}',[TestNotification::class,'updateStatus'])->name('notification.update');
+    Route::post('/notification',[TestNotification::class,'store'])->name('notification.create');
+
 
 });
 

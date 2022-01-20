@@ -35,4 +35,10 @@ class Product extends Model
         // code...
         return $this->belongsTo(Order::class);
     }
+
+    public function notification($value='')
+    {
+        // code...
+        return $this->hasMany(Notification::class,'product_id','id');
+    }
 }
