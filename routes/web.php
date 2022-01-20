@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\BotManController;
 use App\BotMan\NegotiationConversation;
 use App\Http\Controllers\StripeController;
-
+use App\Http\Controllers\TestNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,3 +129,4 @@ Route::get('nego/validity',[NegotiationConversation::class,'checkValidity'])->na
 Route::get('nego/discount',[NegotiationConversation::class,'generateDiscountCode'])->name('nego.discount');
 Route::get('nego/auth',[NegotiationConversation::class,'checkAuth'])->name('nego.auth');
 
+Route::get('/notify',[TestNotification::class,'test'])->name('test.get');

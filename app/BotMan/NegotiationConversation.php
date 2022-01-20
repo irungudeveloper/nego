@@ -10,8 +10,11 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\FailedNegotiation;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\Discount;
@@ -27,6 +30,8 @@ class NegotiationConversation extends Conversation
     protected $system_percentage = 1;
     protected $customer_percentage = 0;
     protected $offer_count = 1;
+    protected $product_name;
+    protected $user_id;
 
     public function askName()
     {
@@ -104,6 +109,8 @@ class NegotiationConversation extends Conversation
    	// code...
 
    		$details = $this->getProduct();
+        $this->product_name = $details->product_name;
+        $this->user_id = $details->user_id;
 
    		if ((($details->product_retail_price)-($details->product_retail_price * ($percentage/100))) > ($details->product_final_price) ) 
    		{
@@ -273,6 +280,7 @@ class NegotiationConversation extends Conversation
                 {
                     $this->customer_percentage = (int)$answer->getText();
                     $this->offer2();
+                    // $this->breakDown();
                 });
             }
         });
@@ -310,6 +318,7 @@ class NegotiationConversation extends Conversation
                 {
                     $this->customer_percentage = (int)$answer->getText();
                     $this->offer3();
+                    
                 });
             }
         });
@@ -521,6 +530,19 @@ class NegotiationConversation extends Conversation
         $this->ask('Please provide your email and the merchant will contact you shortly', function(Answer $answer)
         {   
             $this->email = $answer->getText();
+
+            $contact_data = [
+                                'user_name'=>$this->name,
+                                'user_email'=>$this->email,
+                                'product_name'=>$this->product_name,
+                                'percentage_discount'=>$this->customer_percentage,
+                                'thank_you'=>'Thank you for using this platform.',
+                            ];
+
+            $user = User::findOrFail($this->user_id);
+
+            // $user->notify(new FailedNegotiation($contact_data));
+            Notification::send($user, new FailedNegotiation($contact_data));
 
             $this->thankYou();
 
