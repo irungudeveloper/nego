@@ -281,8 +281,8 @@ class NegotiationConversation extends Conversation
                 $this->ask('What is your counter offer',function(Answer $answer)
                 {
                     $this->customer_percentage = (int)$answer->getText();
-                    // $this->offer2();
-                    $this->breakDown();
+                    $this->offer2();
+                    // $this->breakDown();
                 });
             }
         });
