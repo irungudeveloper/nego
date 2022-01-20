@@ -90,10 +90,10 @@
                             @if($data->negotiation_status == 0)
                             <td>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12 col-md-6 m-1">
                                          <a href=" {{ route('notification.update',['id'=>$data->id,'status'=>1]) }} " class="btn btn-solid btn-primary">Succesful Negotiation</a>  
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-md-6 col-12 m-1">
                                          <a href=" {{ route('notification.update',['id'=>$data->id,'status'=>2]) }} " class="btn btn-solid btn-danger">Cancel Negotiation</a>
                                     </div>
                                 </div>
